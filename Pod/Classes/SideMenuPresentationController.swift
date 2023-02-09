@@ -231,7 +231,7 @@ private extension SideMenuPresentationController {
         }
 
         if tabBarVisible {
-            rect.size.height -= (bottomBarHeight + (window?.safeAreaInsets.bottom ?? 0))
+            rect.size.height -= (tabBarHeight + (window?.safeAreaInsets.bottom ?? 0))
         }
 
         rect.origin.x = leftSide ? 0 : rect.width - config.menuWidth
