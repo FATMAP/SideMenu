@@ -93,6 +93,7 @@ public struct SideMenuSettings: Model, InitializableStruct {
         let minimumSize = min(appScreenRect.width, appScreenRect.height)
         return min(round(minimumSize * 0.75), 240)
     }()
+    public var tabBarHeight: CGFloat = 0
     public var presentingViewControllerUserInteractionEnabled: Bool = false
     public var presentingViewControllerUseSnapshot: Bool = false
     public var presentDuration: Double = 0.35
@@ -423,6 +424,11 @@ extension SideMenuNavigationController: Model {
         set { settings.menuWidth = newValue }
     }
 
+    @IBInspectable open var tabBarHeight: CGFloat {
+        get { return settings.tabBarHeight }
+        set { settings.tabBarHeight = newValue }
+    }
+    
     @IBInspectable open var presentingViewControllerUserInteractionEnabled: Bool {
         get { return settings.presentingViewControllerUserInteractionEnabled }
         set { settings.presentingViewControllerUserInteractionEnabled = newValue }
