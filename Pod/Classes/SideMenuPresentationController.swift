@@ -18,6 +18,8 @@ internal protocol PresentationModel {
     var presentationStyle: SideMenuPresentationStyle { get }
     /// Width of the menu when presented on screen, showing the existing view controller in the remaining space. Default is zero.
     var menuWidth: CGFloat { get }
+    /// Height of tab bar if visible. The height of the menu will be adjusted to not cover the tab bar. Default is zero.
+    var tabBarHeight: CGFloat { get }
 }
 
 internal protocol SideMenuPresentationControllerDelegate: class {
@@ -222,16 +224,9 @@ private extension SideMenuPresentationController {
     var frameOfPresentedViewInContainerView: CGRect {
         guard let containerView = containerView else { return .zero }
         var rect = containerView.bounds
-        let window = UIApplication.shared.windows.filter(\.isKeyWindow).first
-        let tabBarHeight: CGFloat = 49.0
-        var tabBarVisible: Bool = true
 
-        if let tabBarController = presentingViewController as? UITabBarController, tabBarController.tabBar.isHidden {
-            tabBarVisible = false
-        }
-
-        if tabBarVisible {
-            rect.size.height -= (tabBarHeight + (window?.safeAreaInsets.bottom ?? 0))
+        if config.tabBarHeight != 0 {
+            rect.size.height -= (config.tabBarHeight + (containerView.window?.safeAreaInsets.bottom ?? 0))
         }
 
         rect.origin.x = leftSide ? 0 : rect.width - config.menuWidth
